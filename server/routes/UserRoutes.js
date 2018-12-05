@@ -29,8 +29,22 @@ router.post("/login", async (req, res) => {
     return res.json({ loginSucess: false, message: "No User Foud" });
   }
   //Check Password
+  // method to check password is defined in user schema
+  user.comparePasswrod(req.body.password, (err, isMatch) => {
+    // if password don't match
+    if (!isMatch)
+      return res.json({ loginSucces: false, message: "Wrong Password" });
 
-  return res.json({ loginSucess: true, message: "Welocome Back" });
+    // if password match we will generate a tocken
+    user.generateTocken((err, user) => {
+      if (err) return res.status(400).send(err);
+      // if everything goes ok then we will store the token as cookie
+      res
+        .cookie("w-auth", user.token)
+        .status(200)
+        .json({ loginSucces: true });
+    });
+  });
 });
 
 module.exports = router;

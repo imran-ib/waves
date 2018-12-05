@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const saltRounds = 10;
+require("dotenv").config();
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -36,7 +38,7 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  tocken: {
+  token: {
     type: String
   }
 });
@@ -64,6 +66,35 @@ UserSchema.pre("save", function(next) {
   }
 });
 
-const User = mongoose.model("User", UserSchema);
+//
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── II ──────────
+//   :::::: C R E A T E   A   M E T H O S   T H A T   W I L L   T A K E   U S E R   P A S S W O R D   A N D   C A L L B A C K : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+// we will be calling this function in login(post) route and we will pass password that user enters
+UserSchema.methods.comparePasswrod = function(candidatePassword, cb) {
+  // compare password with
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
 
+//
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── III ──────────
+//   :::::: A F T E R   C H E C K I N G   P A S S W O R D   W E   W I L L   G E N E R A T E   T O C K E N : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+// we will be calling this function in login(post) route and we will pass password that user enters
+UserSchema.methods.generateTocken = function(cb) {
+  var user = this;
+  // we will use user id and SECRETE keyword to generate token
+  var token = jwt.sign(user._id.toHexString(), process.env.SECRET);
+  // we create a new field in user collection in db
+  user.token = token;
+  // save user
+  user.save(function(err, user) {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+};
+const User = mongoose.model("User", UserSchema);
 module.exports = { User };

@@ -34,7 +34,7 @@ const UserSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
-  roll: {
+  role: {
     type: Number,
     default: 0
   },
@@ -96,5 +96,27 @@ UserSchema.methods.generateTocken = function(cb) {
     cb(null, user);
   });
 };
+
+//
+// ──────────────────────────────────────────────── III ──────────
+//   :::::: A U T H : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────
+//
+
+UserSchema.statics.findByToken = function(token, cb) {
+  var user = this;
+  // verify token with jwt package
+  jwt.verify(token, process.env.SECRET, function(err, decoded) {
+    //jwt will give back user id as decoded
+    // so we find user with id and token
+    // token is comming from auth middleware
+
+    user.findOne({ _id: decoded, token: token }, function(err, user) {
+      if (err) return cb(err);
+      cb(null, user);
+    });
+  });
+};
+
 const User = mongoose.model("User", UserSchema);
 module.exports = { User };

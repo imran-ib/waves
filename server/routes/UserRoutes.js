@@ -7,7 +7,6 @@ const { auth } = require("../middleware/auth");
 // ──────────────────────────────────────────────── I ──────────
 //   :::::: A U T H : :  :   :    :     :        :          :
 // ──────────────────────────────────────────────────────────
-//
 
 router.get("/auth", auth, (req, res) => {
   // if everything went ok in auth middleware let the user in

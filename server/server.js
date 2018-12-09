@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 var UserRoutes = require("./routes/UserRoutes");
 var BrandsRoutes = require("./routes/brandsRoutes");
 var WoodsRoutes = require("./routes/woodsRoutes");
+var ServerRoutes = require("./routes/productRoutes");
 
 // ─── DOTENV ─────────────────────────────────────────────────────────────────────
 require("dotenv").config();
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 // ─────────────────────────────────────────────────────────────────── ROUTES ─────
 app.use("/api/user", UserRoutes);
+app.use("/api/product", ServerRoutes);
 app.use("/api/product", BrandsRoutes);
 app.use("/api/product", WoodsRoutes);
 

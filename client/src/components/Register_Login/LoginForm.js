@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { compose } from "redux";
 
 import TextInputField from "./../../Utills/form/TextInputField";
 import {
@@ -52,7 +51,7 @@ class LoginForm extends Component {
   onFormSubmit = values => {
     this.props.loginUser(values).then(user => {
       if (this.props.loginSuccess.loginSuccess.loginSucces) {
-        this.props.history.push("/dashboard");
+        this.props.history.push("/user/dashboard");
       } else {
         this.props.history.push("/register_login");
       }
@@ -67,7 +66,6 @@ class LoginForm extends Component {
       invalid,
       error
     } = this.props;
-    console.log(this.props);
     return (
       <div className="sigin_wrapper">
         <form onSubmit={handleSubmit(this.onFormSubmit)}>
@@ -106,10 +104,12 @@ const mapState = state => ({
   loginSuccess: state.user
 });
 
-export default compose(
-  connect(
-    mapState,
-    actions
-  ),
-  reduxForm({ form: "LoginFor", validate })
-)(withRouter(LoginForm));
+LoginForm = connect(
+  mapState,
+  actions
+)(LoginForm);
+
+export default reduxForm({
+  form: "loginForm",
+  validate
+})(withRouter(LoginForm));

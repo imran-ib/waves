@@ -8,15 +8,24 @@ import Layout from "./../HOC/Layout/Layout";
 import RegiserLogin from "./../components/Register_Login/RegiserLogin";
 import RegisterForm from "./../components/Register_Login/RegisterForm";
 import UserDashboard from "./../components/User/UserDashboard";
+import Auth from "../HOC/Auth/User";
 
 function Routes() {
   return (
     <Layout>
       <Switch>
-        <Route exact path="/user/dashboard" component={UserDashboard} />
-        <Route exact path="/register" component={RegisterForm} />
-        <Route exact path="/register_login" component={RegiserLogin} />
-        <Route exact path="/" component={Home} />
+        <Route
+          exact
+          path="/user/dashboard"
+          component={Auth(UserDashboard, true)}
+        />
+        <Route exact path="/register" component={Auth(RegisterForm, false)} />
+        <Route
+          exact
+          path="/register_login"
+          component={Auth(RegiserLogin, false)}
+        />
+        <Route exact path="/" component={Auth(Home)} />
         hello
       </Switch>
     </Layout>

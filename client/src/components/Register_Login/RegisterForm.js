@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 
 import TextInputField from "./../../Utills/form/TextInputField";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import {
   createValidator,
   composeValidators,
@@ -148,10 +147,12 @@ const mapState = state => ({
   Succes: state.user.registerSuccess
 });
 
-export default compose(
-  connect(
-    mapState,
-    actions
-  ),
-  reduxForm({ form: "RegisterForm", validate })
-)(withRouter(RegisterForm));
+RegisterForm = connect(
+  mapState,
+  actions
+)(RegisterForm);
+
+export default reduxForm({
+  form: "RegisterForm",
+  validate
+})(withRouter(RegisterForm));

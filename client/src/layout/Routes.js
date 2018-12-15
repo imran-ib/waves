@@ -10,6 +10,7 @@ import RegisterForm from "./../components/Register_Login/RegisterForm";
 import UserDashboard from "./../components/User/UserDashboard";
 import Auth from "../HOC/Auth/User";
 
+
 function Routes() {
   return (
     <Layout>

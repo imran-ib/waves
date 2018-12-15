@@ -1,7 +1,12 @@
 import { SubmissionError } from "redux-form";
 import { toastr } from "react-redux-toastr";
 
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./UserConstants";
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  AUTH_USER,
+  LOGOUT_USER
+} from "./UserConstants";
 import { USER_SERVER } from "./../../../Utills/User/userRoutes";
 import axios from "axios";
 
@@ -71,6 +76,26 @@ export const auth = () => async dispatch => {
       type: AUTH_USER,
       payload: userData.data
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//
+// ────────────────────────────────────────────────────────────── IV ──────────
+//   :::::: L O G O U T   U S E R : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────
+//
+
+export const logoutUser = () => async dispatch => {
+  try {
+    const request = await axios.get(`${USER_SERVER}/logout`);
+
+    dispatch({
+      type: LOGOUT_USER,
+      payload: request.data
+    });
+    await toastr.success("Suucess", "You are Successfuly Logedout");
   } catch (error) {
     console.log(error);
   }

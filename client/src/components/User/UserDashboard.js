@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { UserLayout } from "./../../HOC/User/UserLayout";
 import MyButton from "./../../Utills/Button/MyButton";
+import { connect } from "react-redux";
 
 export class UserDashboard extends Component {
   render() {
+    const { user } = this.props;
+    const logedinUser = user.userData;
     return (
       <UserLayout>
         <div>
           <div className="user_nfo_panel">
             <h2>User Information</h2>
-            <span>FirstName</span>
-            <span>LastName</span>
-            <span>Email</span>
+            <span>{logedinUser && logedinUser.firstName}</span>
+            <span>{logedinUser && logedinUser.lastName}</span>
+            <span>{logedinUser && logedinUser.email}</span>
             <MyButton
               type="default"
               title="Edit Account Info"
@@ -20,7 +23,7 @@ export class UserDashboard extends Component {
           </div>
 
           <div className="user_nfo_panel">
-            <h1>Purchase History</h1>
+            <h1>{logedinUser && logedinUser.history}</h1>
 
             <div className="user_product_block_wrapper">History</div>
           </div>
@@ -30,4 +33,4 @@ export class UserDashboard extends Component {
   }
 }
 
-export default UserDashboard;
+export default connect()(UserDashboard);

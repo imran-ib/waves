@@ -1,4 +1,9 @@
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./UserConstants";
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  AUTH_USER,
+  LOGOUT_USER
+} from "./UserConstants";
 
 export default (state = {}, { type, payload }) => {
   switch (type) {
@@ -10,6 +15,9 @@ export default (state = {}, { type, payload }) => {
 
     case AUTH_USER:
       return { ...state, userData: payload };
+
+    case LOGOUT_USER:
+      return { ...state };
     default:
       return state;
   }

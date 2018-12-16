@@ -9,7 +9,7 @@ import RegiserLogin from "./../components/Register_Login/RegiserLogin";
 import RegisterForm from "./../components/Register_Login/RegisterForm";
 import UserDashboard from "./../components/User/UserDashboard";
 import Auth from "../HOC/Auth/User";
-
+import ShopDashboard from "./../components/Shop/ShopDashboard";
 
 function Routes() {
   return (
@@ -27,6 +27,7 @@ function Routes() {
           component={Auth(RegiserLogin, false)}
         />
         <Route exact path="/" component={Auth(Home)} />
+        <Route exact path="/shop" component={Auth(ShopDashboard)} />
         hello
       </Switch>
     </Layout>

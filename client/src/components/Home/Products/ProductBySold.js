@@ -10,7 +10,7 @@ const actions = {
 class ProductBySold extends Component {
   componentDidMount() {
     this.props.getProductBySold().then(data => {
-      console.log(this.props.product);
+      //console.log(this.props.product);
     });
   }
   render() {

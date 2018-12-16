@@ -1,29 +1,25 @@
 import React from "react";
-import { Card } from "./Card";
+import Card from "./Card";
 
-function CardBlock(props) {
-  const rednderCards = () =>
-    props.list &&
-    props.list.map((card, i) => (
-      <div>
-        <Card />
-      </div>
-    ));
+const CardBlock = props => {
+  const renderCards = () =>
+    props.list ? props.list.map((card, i) => <Card key={i} {...card} />) : null;
+
   return (
     <div className="card_block">
       <div className="container">
-        {props.title && <div className="title">{props.title}</div>}
+        {props.title ? <div className="title">{props.title}</div> : null}
         <div
           style={{
             display: "flex",
             flexWrap: "wrap"
           }}
         >
-          {props.list && rednderCards(props.list)}
+          {renderCards(props.list)}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default CardBlock;

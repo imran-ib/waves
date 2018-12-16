@@ -9,7 +9,7 @@ const actions = {
 class ProductByArrival extends Component {
   componentDidMount() {
     this.props.getProductByArrival().then(data => {
-      console.log(this.props.product);
+      // console.log(this.props.product);
     });
   }
   render() {
